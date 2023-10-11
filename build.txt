@@ -1,0 +1,4 @@
+displayName = SubworldTesting
+author = MooMoo
+version = 0.1
+modReferences = SubworldLibrary
