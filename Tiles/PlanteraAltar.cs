@@ -59,14 +59,14 @@ namespace SubworldTesting.Tiles
 
             if (!plantera)
             {
-                int spawnPosY = Main.rand.Next(4) switch
+                int spawnPosY = Main.rand.Next(2) switch
                 {
-                    0 => 600,
-                    1 => -600,
+                    0 => 1200,
+                    1 => -1200,
                     _ => 0
                 };
 
-                int spawnPosX = Main.rand.Next(4) switch
+                int spawnPosX = Main.rand.Next(2) switch
                 {
                     0 => 1200,
                     1 => -1200,
