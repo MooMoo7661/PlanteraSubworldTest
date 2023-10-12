@@ -44,14 +44,11 @@ namespace SubworldTesting
 
             protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
             {
-                // progress.Message is the message shown to the user while the following code is running.
-                // Try to make your message clear. You can be a little bit clever, but make sure it is descriptive enough for troubleshooting purposes.
-                progress.Message = "Building Arena";    
+                progress.Message = "Building Arena";
+
                 FillWorldWithMud();
-                for (int i = 0; i < 20; i++)
-                {
-                    WorldGen.PlaceObject(Main.maxTilesX / 2, (Main.maxTilesY / 2) - i, ModContent.TileType<PlanteraAltar>());
-                }
+                MudWallRunner();
+                PlaceAltar(Main.maxTilesX / 2, (Main.maxTilesY / 2) - 8);
                 PlaceTorchesAndPlatforms();
             }
         }
@@ -78,9 +75,30 @@ namespace SubworldTesting
             WorldUtils.Gen(new Point(Main.maxTilesX / 2, Main.maxTilesY / 2), new Shapes.Circle(5, 5), new Actions.Blank().Output(shapeData2));
             WorldUtils.Gen(new Point(Main.maxTilesX / 2, Main.maxTilesY / 2), new Shapes.Circle(5, 5), new Actions.SetTile(TileID.Mud));
             WorldUtils.Gen(new Point(Main.maxTilesX / 2, Main.maxTilesY / 2), new ModShapes.OuterOutline(shapeData2, true), new Actions.SetTile(TileID.JungleGrass));
+        }
 
-            
+        public static void MudWallRunner()
+        {
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = 0; y < Main.maxTilesY; y++)
+                {
+                    WorldGen.PlaceWall(x, y, WallID.MudUnsafe, true);
+                }
+            }
+        }
 
+        public static void PlaceAltar(int x, int y)
+        {
+            WorldGen.PlaceObject(x, y, ModContent.TileType<PlanteraAltar>());
+            for (int i = 0; i < 5; i++)
+            {
+                WorldGen.PlaceTile((x + 2) - i, y + 2, TileID.Mudstone, true, true);
+                if (i == 0 || i == 4)
+                WorldGen.PlaceTile(x + 2 - i, y + 1, TileID.Torches, true, false);
+            }
+        
+            WorldGen.PlaceTile(x, y - 6, TileID.Torches);
         }
 
         public static void PlaceTorchesAndPlatforms()
@@ -90,18 +108,9 @@ namespace SubworldTesting
 
             WorldGen.PlaceTile(l, m, TileID.Mudstone);
 
-            for (int x = 0; x < Main.maxTilesX; x++)
-            {
-                for (int y = 0; y < Main.maxTilesY; y++)
-                {
-                    WorldGen.PlaceWall(x, y, WallID.MudUnsafe, true);
-                }
-            }
-
-            int torchCounter = 0;
             for (int i = 0; i < Main.maxTilesY; i++)
             {
-                torchCounter = 0;
+                int torchCounter = 0;
                 for (int j = 0; j < Main.maxTilesX; j++)
                 {
                     Tile tile = Framing.GetTileSafely(i, j);
