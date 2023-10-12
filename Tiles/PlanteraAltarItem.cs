@@ -16,8 +16,7 @@ namespace SubworldTesting.Tiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Eclipse Bar");
-            // Tooltip.SetDefault("Radiates otherworldly energy");
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
