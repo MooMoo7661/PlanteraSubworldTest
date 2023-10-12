@@ -18,6 +18,7 @@ namespace SubworldTesting.Tiles
         {
             Item.ResearchUnlockCount = 1;
         }
+        
 
         public override void SetDefaults()
         {
